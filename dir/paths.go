@@ -6,26 +6,22 @@ import (
 	"strings"
 )
 
-func AlternatePath(s string) (altPath string) {
-	if s == "~/" || s == "~" {
+// Turns a path into its absolute path
+func AlternatePath(s string) string {
+	switch {
+	case s == "~/" || s == "~":
 		homeDir, _ := os.UserHomeDir()
 		return homeDir
-	}
-
-	if filepath.IsAbs(s) {
+	case filepath.IsAbs(s):
 		return s
-	}
-
-	if strings.HasPrefix(s, "~/") {
-		homeDir, err := os.UserHomeDir()
-		if err == nil {
+	case strings.HasPrefix(s, "~/"):
+		if homeDir, err := os.UserHomeDir(); err == nil {
 			return filepath.Join(homeDir, strings.TrimPrefix(s, "~/"))
 		}
+	default:
+		if a, err := filepath.Abs(s); err == nil {
+			return a
+		}
 	}
-
-	if a, err := filepath.Abs(s); err == nil {
-		altPath = a
-	}
-
-	return altPath
+	return ""
 }
