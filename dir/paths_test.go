@@ -21,4 +21,19 @@ func TestAlternatePath(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, wd+"/foo/bar", AlternatePath("./foo/bar"))
 	})
+	t.Run("relative path without ./", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/foo/bar", AlternatePath("foo/bar"))
+	})
+	t.Run("relative path of a hidden directory", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath("./.foo/bar"))
+	})
+	t.Run("relative path of a hidden directory without ./", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath(".foo/bar"))
+	})
 }

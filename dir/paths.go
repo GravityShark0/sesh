@@ -9,7 +9,7 @@ import (
 func AlternatePath(s string) (altPath string) {
 	if s == "~/" || s == "~" {
 		homeDir, _ := os.UserHomeDir()
-		altPath = homeDir
+		return homeDir
 	}
 
 	if filepath.IsAbs(s) {
@@ -19,14 +19,12 @@ func AlternatePath(s string) (altPath string) {
 	if strings.HasPrefix(s, "~/") {
 		homeDir, err := os.UserHomeDir()
 		if err == nil {
-			altPath = filepath.Join(homeDir, strings.TrimPrefix(s, "~/"))
+			return filepath.Join(homeDir, strings.TrimPrefix(s, "~/"))
 		}
 	}
 
-	if strings.HasPrefix(s, ".") {
-		if a, err := filepath.Abs(s); err == nil {
-			altPath = a
-		}
+	if a, err := filepath.Abs(s); err == nil {
+		altPath = a
 	}
 
 	return altPath
