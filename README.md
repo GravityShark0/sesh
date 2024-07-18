@@ -1,3 +1,5 @@
+# IM JUST TRYING OUT HOW TO CODE DONT EXPECT ANYTHING TO WORK
+
 <p align="center">
   <img width="256" height="256" src="https://github.com/joshmedeski/sesh/blob/main/sesh-icon.png" />
 </p>
