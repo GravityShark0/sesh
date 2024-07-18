@@ -1,26 +1,15 @@
 package dir
 
-import (
-	"os"
-	"path/filepath"
-	"strings"
-)
+import "path/filepath"
 
 func AlternatePath(s string) (altPath string) {
-	if s == "~/" || s == "~" {
-		homeDir, _ := os.UserHomeDir()
-		altPath = homeDir
-	}
-
 	if filepath.IsAbs(s) {
 		return s
 	}
 
-	if strings.HasPrefix(s, "~/") {
-		homeDir, err := os.UserHomeDir()
-		if err == nil {
-			altPath = filepath.Join(homeDir, strings.TrimPrefix(s, "~/"))
-		}
+	fullPath := FullPath(s)
+	if fullPath != s {
+		altPath = fullPath
 	} else {
 		if a, err := filepath.Abs(s); err == nil {
 			altPath = a
