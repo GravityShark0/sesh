@@ -51,5 +51,11 @@ func DeterminePath(choice string) (string, error) {
 		return zoxideResult.Path, nil
 	}
 
+	// Fallback use alternate path to try to find path
+	alternatePath := dir.AlternatePath(choice)
+	if alternatePath != "" {
+		return alternatePath, nil
+	}
+
 	return fullPath, nil
 }

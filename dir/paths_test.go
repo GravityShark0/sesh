@@ -19,6 +19,42 @@ func TestAlternatePath(t *testing.T) {
 	t.Run("relative path", func(t *testing.T) {
 		wd, err := os.Getwd()
 		require.NoError(t, err)
+		require.Equal(t, wd+"/foo/bar", AlternatePath("foo/bar"))
+	})
+	t.Run("relative path on hidden directory", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath(".foo/bar"))
+	})
+	t.Run("relative path w/prefix ./", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
 		require.Equal(t, wd+"/foo/bar", AlternatePath("./foo/bar"))
+	})
+	t.Run("relative path on hidden directory w/prefix ./", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath("./.foo/bar"))
+	})
+
+	t.Run("relative path w/suffix /", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/foo/bar", AlternatePath("foo/bar/"))
+	})
+	t.Run("relative path on hidden directory w/suffix /", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath(".foo/bar/"))
+	})
+	t.Run("relative path w/prefix ./ and suffix /", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/foo/bar", AlternatePath("./foo/bar/"))
+	})
+	t.Run("relative path on hidden directory w/prefix ./ and suffix /", func(t *testing.T) {
+		wd, err := os.Getwd()
+		require.NoError(t, err)
+		require.Equal(t, wd+"/.foo/bar", AlternatePath("./.foo/bar/"))
 	})
 }

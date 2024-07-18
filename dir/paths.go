@@ -21,9 +21,7 @@ func AlternatePath(s string) (altPath string) {
 		if err == nil {
 			altPath = filepath.Join(homeDir, strings.TrimPrefix(s, "~/"))
 		}
-	}
-
-	if strings.HasPrefix(s, ".") {
+	} else {
 		if a, err := filepath.Abs(s); err == nil {
 			altPath = a
 		}
